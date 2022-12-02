@@ -4,8 +4,8 @@
 
 [About](#about-cat-delivery)                     •
 [Programming Patterns](#programming-patterns)    •
-[Installation](#installation)                    •
-[Configuration](#configuration)                  •
+[Screenshots](#screenshots)                      •
+[Project Status](#project-status)                •
 
 </div>
 
@@ -17,7 +17,7 @@
 
 Цель игры: не позволить похитить при помощи магнита 3-х котов. После проигрыша игрок обновляет рекордное время и свой счет.
 
-Состав команды: геймдизайнер, 2 программиста.
+Состав команды: геймдизайнер, 2 программиста, художник.
 
 ## Programming Patterns
 
@@ -26,4 +26,8 @@
 2. ```MVVM (UnityWeld)``` - для связи между игровым состоянием (game state) и UI.
 3. ```Dependency Injection (Zenject)``` - для уменьшения связности модулей игры и кода в целом, а также для пробрасывания основных зависимостей.
 4. ```IoC``` - абстрагирование при помощи интерфейсов (контрактов) для ухода от конкретных реализаций классов. Используется при создании оружий (*IWeapon*, *LaserGun*, *BulletGun*), а также для пробрасывания глобальных зависимостей (*ICoroutineRunner*, *IPauseProvider*, *ILoadingScreenProvider* и т.д.).
-5. ```Factory``` - для инкапсуляции логики создания сущностей в порождающие классы. Примеры фабрик: *CatView.Factory*, *Laser.Factory*, *Bullet.Factory*, *PlayerFactory*, *ExplosionFactory*.
+5. ```Factory``` - для инкапсуляции логики создания сущностей в порождающие классы. Примеры фабрик, использующихся в прототипе: *CatView.Factory*, *Laser.Factory*, *Bullet.Factory*, *PlayerFactory*, *ExplosionFactory*.
+
+## Screenshots
+
+## Project Status
