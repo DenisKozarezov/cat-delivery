@@ -18,8 +18,8 @@ namespace Core.Models
         }
         public void Deserialize()
         {
-            HighScore = PlayerPrefs.GetInt("HighScore", HighScore);
-            BestTime = PlayerPrefs.GetFloat("BestTime", BestTime);
+            HighScore = PlayerPrefs.GetInt("HighScore");
+            BestTime = PlayerPrefs.GetFloat("BestTime");
         }
     }
 }

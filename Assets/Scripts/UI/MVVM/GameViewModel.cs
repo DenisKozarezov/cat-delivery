@@ -171,7 +171,7 @@ namespace Core.UI
         {
             _signalBus.Fire<GameOverSignal>();
 
-            _gameState.Serialize();
+            UpdateStatistics();
 
             _signalBus.TryUnsubscribe<CatFellSignal>(OnCatFellSignal);
             _signalBus.TryUnsubscribe<CatSavedSignal>(OnCatSavedSignal);
@@ -181,6 +181,16 @@ namespace Core.UI
             SoundManager.PlayOneShot(_gameSounds.GameOver.Clip, _gameSounds.GameOver.Volume);
             HealthVM.Reset();
             GameOverVM.Show();
+        }
+
+        private void UpdateStatistics()
+        {
+            _gameState.Deserialize();
+
+            if (BestTime < CurrentTime) BestTime = CurrentTime;
+            if (HighScore < Score) HighScore = Score;
+
+            _gameState.Serialize();
         }
 
         void IPauseHandler.SetPaused(bool isPaused)
