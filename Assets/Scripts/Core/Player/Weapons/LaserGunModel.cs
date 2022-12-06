@@ -5,7 +5,7 @@ namespace Core.Weapons
 {
     public class LaserGunModel
     {
-        public readonly float ReloadTime;
+        public float ReloadTime;
         public readonly LaserGunConfig LaserGunConfig;
         public readonly Transform FirePoint;
         public readonly Cooldown Cooldown;

@@ -3,24 +3,25 @@
     public class MovementSpeedBonus : IBuff
     {
         private readonly float _movementBonus;
+        private readonly PlayerModel _playerModel;
         private float _oldMovementSpeed;
         public Cooldown Duration { get; private set; }
 
-        public MovementSpeedBonus(float speedBonus)
+        public MovementSpeedBonus(float speedBonus, PlayerModel model)
         {
             _movementBonus = speedBonus;
+            _playerModel = model;
             Duration = new Cooldown();
         }
 
-        public void Execute(PlayerModel model)
+        public void Execute()
         {
-            _oldMovementSpeed = model.MovementSpeed;
-            model.MovementSpeed += _movementBonus;
+            _oldMovementSpeed = _playerModel.MovementSpeed;
+            _playerModel.MovementSpeed += _movementBonus;
         }
-
-        public void Reset(PlayerModel model)
+        public void Reset()
         {
-            model.MovementSpeed = _oldMovementSpeed;
+            _playerModel.MovementSpeed = _oldMovementSpeed;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Core.Weapons
         private readonly LaserGunModel _model;
         private readonly Laser.Factory _laserFactory;
 
-        public float ReloadTime => _model.ReloadTime;
+        public float ReloadTime { get => _model.ReloadTime; set => _model.ReloadTime = value; }
         public event Action Missed;
         public event Action<CatView> Hit;
 

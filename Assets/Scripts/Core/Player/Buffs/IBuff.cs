@@ -3,7 +3,7 @@
     public interface IBuff
     {
         Cooldown Duration { get; }
-        void Execute(PlayerModel model);
-        void Reset(PlayerModel model);
+        void Execute();
+        void Reset();
     }
 }

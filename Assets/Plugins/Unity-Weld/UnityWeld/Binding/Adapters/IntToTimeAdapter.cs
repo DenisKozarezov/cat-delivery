@@ -3,7 +3,7 @@
 namespace UnityWeld.Binding.Adapters
 {
     /// <summary>
-    /// Adapter that converts a int to a string.
+    /// Adapter that converts an int to a string.
     /// </summary>
     [Adapter(typeof(int), typeof(string))]
     public class IntToTimeAdapter : IAdapter

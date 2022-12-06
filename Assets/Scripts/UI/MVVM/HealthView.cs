@@ -7,7 +7,7 @@ using DG.Tweening;
 namespace Core.UI
 {
     [Binding]
-    public class HealthViewModel : MonoBehaviour
+    public class HealthView : MonoBehaviour
     {
         [SerializeField]
         private Transform _parentPanel;
@@ -22,8 +22,6 @@ namespace Core.UI
         private byte _maxHealth;
         private Tweener _vibeTweener;
         private Transform _lastHealth;
-
-        public bool IsGameOver => _currentIndex == 0;
 
         private void VibeLastHealth(bool isVibing)
         {

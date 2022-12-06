@@ -5,7 +5,7 @@ namespace Core.Weapons
 {
     public class BulletGunModel
     {
-        public readonly float ReloadTime;
+        public float ReloadTime;
         public readonly BulletGunConfig BulletGunConfig;
         public readonly Transform FirePoint;
         public readonly Cooldown Cooldown;

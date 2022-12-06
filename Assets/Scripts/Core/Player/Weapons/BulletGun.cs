@@ -12,7 +12,7 @@ namespace Core.Weapons
         private Bullet.Factory _bulletFactory;
         private Bullet.ExplosionFactory _explosionFactory;
 
-        public float ReloadTime => _model.ReloadTime;
+        public float ReloadTime { get => _model.ReloadTime; set => _model.ReloadTime = value; }
         public event Action Missed;
         public event Action<CatView> Hit;
 

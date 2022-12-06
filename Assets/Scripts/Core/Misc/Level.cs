@@ -4,6 +4,7 @@ using Zenject;
 using Core.Infrastructure.Signals.Game;
 using Core.Models;
 using Core.Player;
+using Core.Player.Buffs;
 
 namespace Core
 {
@@ -38,7 +39,7 @@ namespace Core
 
         void IInitializable.Initialize()
         {
-            _signalBus.Subscribe<GameOverSignal>(OnGameOver);
+            _signalBus.Subscribe<GameOverSignal>(StopGame);
             _pauseProvider.Register(_catSpawner);
             _pauseProvider.Register(_laserSpawner);
             SpawnPlayer();
@@ -58,8 +59,7 @@ namespace Core
             _laserSpawner.SetEnabled(true);
             _playerController.Enable();
         }
-
-        private void OnGameOver()
+        private void StopGame()
         {
             _catSpawner.SetEnabled(false);
             _catSpawner.Dispose();

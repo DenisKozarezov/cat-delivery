@@ -6168,7 +6168,7 @@ GameObject:
   - component: {fileID: 1634786839}
   - component: {fileID: 1634786840}
   m_Layer: 5
-  m_Name: Health View Model
+  m_Name: Health View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

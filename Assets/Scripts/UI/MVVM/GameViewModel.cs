@@ -13,7 +13,7 @@ namespace Core.UI
     [Binding]
     public class GameViewModel : MonoBehaviour, INotifyPropertyChanged, IPauseHandler
     {
-        [field: SerializeField] private HealthViewModel HealthVM { get; set; }
+        [field: SerializeField] private HealthView HealthVM { get; set; }
         [field: SerializeField] private GameOverViewModel GameOverVM { get; set; }
 
         private SignalBus _signalBus;
@@ -21,23 +21,18 @@ namespace Core.UI
         private CatsSettings _catsSettings;
         private GameSounds _gameSounds;
         private Countdown _countdown;
-        private float _time;
-        private int _score;
-        private int _streak;
+        private GameState _gameState = new GameState();
         private bool _enabled;
-
-        private readonly string _playerKeyOfHighScore = "HighScore";
-        private readonly string _playerKeyOfBestTime = "BestTime";
 
         [Binding]
         public int Score
         {
-            get => _score;
+            get => _gameState.Score;
             set
             {
-                if (_score == value) return;
+                if (_gameState.Score == value) return;
 
-                _score = value;
+                _gameState.Score = value;
                 OnPropertyChanged("Score");
             }
         }
@@ -45,12 +40,12 @@ namespace Core.UI
         [Binding]
         public int Streak
         {
-            get => _streak;
+            get => _gameState.Streak;
             set
             {
-                if (_streak == value) return;
+                if (_gameState.Streak == value) return;
 
-                _streak = value;
+                _gameState.Streak = value;
                 OnPropertyChanged("Streak");
             }
         }
@@ -58,12 +53,12 @@ namespace Core.UI
         [Binding]
         public float CurrentTime
         {
-            get => _time;
+            get => _gameState.CurrentTime;
             set
             {
-                if (_time == value) return;
+                if (_gameState.CurrentTime == value) return;
 
-                _time = value;
+                _gameState.CurrentTime = value;
                 OnPropertyChanged("CurrentTime");
             }
         }
@@ -71,32 +66,30 @@ namespace Core.UI
         [Binding]
         public int HighScore
         {
-            get
-            {
-                return PlayerPrefs.GetInt(_playerKeyOfHighScore);
-            }
+            get => _gameState.HighScore;
             set
             {
-                if (value > PlayerPrefs.GetInt(_playerKeyOfHighScore))
-                    PlayerPrefs.SetInt(_playerKeyOfHighScore, value);
+                if (_gameState.HighScore == value) return;
+
+                _gameState.HighScore = value;
+                OnPropertyChanged("HighScore");
             }
         }
 
         [Binding]
         public float BestTime
         {
-            get
-            {
-                return PlayerPrefs.GetInt(_playerKeyOfBestTime);
-            }
+            get => _gameState.BestTime;
             set
             {
-                if (value > PlayerPrefs.GetInt(_playerKeyOfBestTime))
-                    PlayerPrefs.SetInt(_playerKeyOfBestTime, (int)value);
+                if (_gameState.BestTime == value) return;
+
+                _gameState.BestTime = value;
+                OnPropertyChanged("BestTime");
             }
         }
 
-        public bool IsGameOver => HealthVM.IsGameOver;
+        public bool IsGameOver => _gameState.CurrentLifes == 0;
         public event PropertyChangedEventHandler PropertyChanged;
 
         [Inject]
@@ -119,6 +112,7 @@ namespace Core.UI
         {
             HealthVM.Clear();
             HealthVM.Init(_gameSettings.Lifes);
+            _gameState.CurrentLifes = _gameSettings.Lifes;
 
             _signalBus.Subscribe<CatFellSignal>(OnCatFellSignal);
             _signalBus.Subscribe<CatSavedSignal>(OnCatSavedSignal);
@@ -140,7 +134,7 @@ namespace Core.UI
         }
         private void Update()
         {
-            if (!_enabled || HealthVM.IsGameOver) return;
+            if (!_enabled || IsGameOver) return;
 
             CurrentTime += Time.deltaTime;
         }
@@ -164,6 +158,7 @@ namespace Core.UI
         {
             Score -= _catsSettings.KidnapPenalty;
             Streak = 0;
+            _gameState.CurrentLifes--;
             HealthVM.RemoveHealth(1);
 
             if (IsGameOver) OnGameOverSignal();
@@ -176,8 +171,7 @@ namespace Core.UI
         {
             _signalBus.Fire<GameOverSignal>();
 
-            HighScore = _score;
-            BestTime = _time;
+            _gameState.Serialize();
 
             _signalBus.TryUnsubscribe<CatFellSignal>(OnCatFellSignal);
             _signalBus.TryUnsubscribe<CatSavedSignal>(OnCatSavedSignal);
